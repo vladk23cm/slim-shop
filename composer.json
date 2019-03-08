@@ -1,0 +1,13 @@
+{
+    "require": {
+        "slim/slim": "^3.0",
+        "illuminate/database": "^5.7",
+        "vladk23cm/cart": "*"
+    },
+    "autoload": {
+	    "psr-4": {
+	      "Kappa\\": "src/",
+	      "App\\": "app/"
+	    }
+  	}
+}
