@@ -2,8 +2,7 @@
 
 namespace App\Controllers;
 
-use \Cart\CartItem;
-use \App\Controllers\Controller;
+
 use \App\Models\Goods;
 
 class CartController extends Controller
@@ -11,25 +10,56 @@ class CartController extends Controller
 	public function __construct($container)
 	{
 		parent::__construct($container);
-		try {
-			$this->cart->restore();
-		} catch (Cart\CartRestoreException $e) {
-			
-		}
+		
+		$this->cart->restore();	
 	}
+
 	public function add($req, $res, $prop)
 	{
-		Goods::find($prop['id']);
-		
+		$this->cart->add($prop['id'], $prop['quality']);
+		$this->cart->update();
+		return $res->withRedirect($_SERVER['HTTP_REFERER'], 301);
 	}
-	public function remove($req, $res)
+
+	public function remove($req, $res, $prop)
 	{
-		$this->cart->remove(1);
+		$this->cart->remove($prop['id']);
+		$this->cart->update();
+		return $res->withRedirect($_SERVER['HTTP_REFERER'], 301);
 	}
+
 	public function all($req, $res)
 	{
-		return $res->withJson($this->cart->all());
+		$cart = $this->cart->all();
 		
+		$goods = Goods::find(array_keys($cart))->toArray();
+		$result = array_map(function ($arr) use ($cart) {
+			$arr['quality'] = $cart[$arr['id']];
+			return $arr;
+		}, $goods);
+
+		return $res->withJson($result);	
+	}
+
+	public function index($req, $res)
+	{
+		$cart = $this->cart->all();
 		
+		$goods = Goods::find(array_keys($cart))->toArray();
+		$result = array_map(function ($arr) use ($cart) {
+			$arr['quality'] = $cart[$arr['id']];
+			$arr['total'] = $cart[$arr['id']] * $arr['price'];
+			return $arr;
+		}, $goods);
+
+		return $this->view->render($res, 'cart.html', [
+        	'goods' => $result
+    	]);
+	}
+
+	public function count($req, $res)
+	{
+		$sum = array_sum($this->cart->all());
+		return $res->getBody()->write($sum);	
 	}
 } 

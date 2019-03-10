@@ -8,7 +8,18 @@ class GoodsController extends Controller
 {
 	public function index($req, $res, $args)
 	{
-		print_r(Goods::all());
-		return $res->getBody()->write('Kappa123');
+
+		return $this->view->render($res, 'shop.html', [
+        	'goods' => Goods::all()->toArray(),
+        	'title' => 'Все товары'
+    	]);
+	}
+
+	public function single($req, $res, $args)
+	{
+		return $this->view->render($res, 'single.html', [
+        	'name' => $args['name']
+    	]);
+		return $res->withJson(Goods::find($args['id'])->toArray());
 	}
 }

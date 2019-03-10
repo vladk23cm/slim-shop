@@ -19,6 +19,20 @@ $app = new \Slim\App(array(
 
 $container = $app->getContainer();
 
+// Register component on container
+$container['view'] = function ($container) {
+    $view = new \Slim\Views\Twig('app/View/', [
+        'cache' => false
+    ]);
+
+    // Instantiate and add Slim specific extension
+    $router = $container->get('router');
+    $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
+    $view->addExtension(new Slim\Views\TwigExtension($router, $uri));
+
+    return $view;
+};
+
 $capsule = new \Illuminate\Database\Capsule\Manager;
 $capsule->addConnection($container['settings']['db']);
 $capsule->setAsGlobal();
@@ -29,7 +43,7 @@ $container['db'] = function () use ($capsule) {
 };
 
 $container['cart'] = function ($container) {
-	return new \Cart\Cart('cart', new \Cart\Storage\CookieStore);
+	return new \Vladk23cm\Cart\Cart('cart', new Vladk23cm\Cart\Storage\SessionStore);
 };
 
 $container['IndexController'] = function ($container) {
@@ -41,6 +55,15 @@ $container['GoodsController'] = function ($container) {
 $container['CartController'] = function ($container) {
 	return new \App\Controllers\CartController($container);
 };
+$container['CategorieController'] = function ($container) {
+	return new \App\Controllers\CategorieController($container);
+};
+
+$function = new Twig_SimpleFunction('count', function () use ($container) {
+  return count($container->cart->all());
+});
+
+$container->get('view')->getEnvironment()->addFunction($function);
 
 require ROOT . '/app/routes.php';
 

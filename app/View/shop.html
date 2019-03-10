@@ -1,0 +1,39 @@
+{% include 'header.html' %}
+
+
+<div class="site-section">
+  <div class="container">
+  
+    <div class="row mb-5">
+      <div class="col-md-12 order-2">
+
+        <div class="row">
+          <div class="col-md-12 mb-5">
+            <div class="float-md-left mb-4"><h2 class="text-black h5">{{ title }}</h2></div>
+           
+          </div>
+        </div>
+        <div class="row">
+          {% for item in goods %}
+            <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+              <div class="block-4 text-center border">
+                <figure class="block-4-image">
+                  <a href="shop-single.html"><img src="/images/{{ item.image }}.jpg" alt="Image placeholder" class="img-fluid"></a>
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="/goods/{{ item.id }}">{{ item.title }}</a></h3>
+                  <p class="mb-0">{{ item.description }}</p>
+                  <p class="text-primary font-weight-bold">${{ item.price }}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+          
+        </div>
+      </div>
+    </div>     
+  </div>
+</div>
+
+{% include 'footer.html' %}
