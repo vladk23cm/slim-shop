@@ -3,7 +3,7 @@
         "slim/slim": "^3.0",
         "illuminate/database": "^5.7",
         "slim/twig-view": "^2.4",
-        "vladk23cm/cart": "1.0.5"
+        "vladk23cm/cart": "dev-master"
     },
     "autoload": {
 	    "psr-4": {

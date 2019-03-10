@@ -95,4 +95,14 @@
       </div>
     </div>
     {% endif %}
+    {% if goods is empty %}
+    <br>
+    <div class="row justify-content-center">
+      Корзина пустая:
+      <div class="col-lg-3 col-sm-6">
+  
+          <button class="btn btn-outline-primary btn-sm btn-block">Продолжить покупки</button>
+      </div>
+    </div>
+    {% endif%}
 {% include 'footer.html' %}

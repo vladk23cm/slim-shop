@@ -16,9 +16,10 @@ class CartController extends Controller
 
 	public function add($req, $res, $prop)
 	{
-		$this->cart->add($prop['id'], $prop['quality']);
-		$this->cart->update();
-		return $res->withRedirect($_SERVER['HTTP_REFERER'], 301);
+		// $this->cart->add($prop['id'], $req['quality']);
+		// $this->cart->update();
+		print_r($req->getParsedBody());
+		// return $res->withRedirect($_SERVER['HTTP_REFERER'], 301);
 	}
 
 	public function remove($req, $res, $prop)
@@ -45,7 +46,11 @@ class CartController extends Controller
 	{
 		$cart = $this->cart->all();
 		
-		$goods = Goods::find(array_keys($cart))->toArray();
+		$goods = Goods::find(array_keys($cart));
+
+		if(!is_null($goods)){
+			$goods = $goods->toArray();
+		}
 		$result = array_map(function ($arr) use ($cart) {
 			$arr['quality'] = $cart[$arr['id']];
 			$arr['total'] = $cart[$arr['id']] * $arr['price'];

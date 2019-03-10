@@ -18,7 +18,7 @@ class GoodsController extends Controller
 	public function single($req, $res, $args)
 	{
 		return $this->view->render($res, 'single.html', [
-        	'name' => $args['name']
+        	'item' => Goods::find($args['id'])->toArray()
     	]);
 		return $res->withJson(Goods::find($args['id'])->toArray());
 	}
