@@ -16,10 +16,17 @@ class CartController extends Controller
 
 	public function add($req, $res, $prop)
 	{
-		// $this->cart->add($prop['id'], $req['quality']);
-		// $this->cart->update();
-		print_r($req->getParsedBody());
-		// return $res->withRedirect($_SERVER['HTTP_REFERER'], 301);
+		$post = $req->getParsedBody();
+		$item = array();
+		if(in_array($post['size'], ['s', 'm', 'l', 'xl'])){
+			$item['size'] = $post['size'];
+		} else {
+			$item['size'] = 'm';
+		}
+		$this->cart->add($prop['id'], $post['quantity'], $item);
+		$this->cart->update();
+		
+		return $res->withRedirect($_SERVER['HTTP_REFERER'], 301);
 	}
 
 	public function remove($req, $res, $prop)
@@ -35,7 +42,7 @@ class CartController extends Controller
 		
 		$goods = Goods::find(array_keys($cart))->toArray();
 		$result = array_map(function ($arr) use ($cart) {
-			$arr['quality'] = $cart[$arr['id']];
+			$arr['quantity'] = $cart[$arr['id']]['quantity'];
 			return $arr;
 		}, $goods);
 
@@ -52,19 +59,22 @@ class CartController extends Controller
 			$goods = $goods->toArray();
 		}
 		$result = array_map(function ($arr) use ($cart) {
-			$arr['quality'] = $cart[$arr['id']];
-			$arr['total'] = $cart[$arr['id']] * $arr['price'];
+			$arr['quantity'] = $cart[$arr['id']]['quantity'];
+			$arr['total'] = $cart[$arr['id']]['quantity'] * $arr['price'];
 			return $arr;
 		}, $goods);
-
+		print_r($result);
 		return $this->view->render($res, 'cart.html', [
-        	'goods' => $result
+      		'goods' => $result
     	]);
 	}
 
 	public function count($req, $res)
 	{
-		$sum = array_sum($this->cart->all());
+		$quantity = array_map(function ($arr) {
+			return $arr['quantity'];
+		}, $this->cart->all());
+		$sum = array_sum($quantity);
 		return $res->getBody()->write($sum);	
 	}
 } 
