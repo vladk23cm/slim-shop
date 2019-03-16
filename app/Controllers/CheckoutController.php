@@ -12,11 +12,7 @@ class CheckoutController extends Controller
 	{
 		$cart = $this->cart->all();
 		
-		$goods = Goods::find(array_keys($cart))->toArray();
-		$result = array_map(function ($arr) use ($cart) {
-			$arr['quantity'] = $cart[$arr['id']]['quantity'];
-			return $arr;
-		}, $goods);
+		$goods = Goods::getCartItems($cart);
 
 
 		return $this->view->render($res, 'checkout.html', [
@@ -26,9 +22,19 @@ class CheckoutController extends Controller
 
 	public function store($req, $res, $args)
 	{
-		$validator = $container->validator->validate($request, [
-    		'get_or_post_parameter_name' => V::length(6, 25)->alnum('_')->noWhitespace(),
-    		// ...
+		
+		$validator = $this->validator->validate($req, [
+    		'first_name' 		=> V::length(2, 25)->noWhitespace(),
+    		'last_name' 		=> V::length(2, 25)->noWhitespace(),
+    		'street_address'    => V::length(2, 25)->noWhitespace(),
+    		'house_address'    	=> V::length(2, 25)->noWhitespace(),
+    		'flat_address'    	=> V::length(2, 25)->noWhitespace(),
+    		'town'   			=> V::length(2, 25)->noWhitespace(),
+    		'zip'    			=> V::length(2, 25)->noWhitespace(),
+    		'email'    			=> V::length(2, 25)->noWhitespace(),
+    		'phone'    			=> V::length(2, 25)->noWhitespace(),
+			'order_notes'    	=> V::length(2, 25)->noWhitespace(),
+
 		]);
 
 		if ($validator->isValid()) {

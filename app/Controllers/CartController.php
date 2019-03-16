@@ -51,19 +51,9 @@ class CartController extends Controller
 
 	public function index($req, $res)
 	{
-		$cart = $this->cart->all();
+	
 		
-		$goods = Goods::find(array_keys($cart));
-
-		if(!is_null($goods)){
-			$goods = $goods->toArray();
-		}
-		$result = array_map(function ($arr) use ($cart) {
-			$arr['quantity'] = $cart[$arr['id']]['quantity'];
-			$arr['total'] = $cart[$arr['id']]['quantity'] * $arr['price'];
-			$arr['size'] =  $cart[$arr['id']]['size'];
-			return $arr;
-		}, $goods);
+		$result = Goods::getCartItems($this->cart->all());
 		print_r($result);
 		return $this->view->render($res, 'cart.html', [
       		'goods' => $result

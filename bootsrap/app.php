@@ -30,6 +30,12 @@ $container['view'] = function ($container) {
     $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
     $view->addExtension(new Slim\Views\TwigExtension($router, $uri));
 
+
+    $view->addExtension(
+        new Awurth\SlimValidation\ValidatorExtension($container['validator'])
+    );
+
+    
     return $view;
 };
 

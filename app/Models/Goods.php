@@ -12,4 +12,16 @@ class Goods extends Model
 	{
 		return $this->belongsTo('App\Models\Categorie');
 	}
+
+	public function getCartItems($cart)
+	{
+		$goods = Goods::find(array_keys($cart))->toArray();
+		$result = array_map(function ($arr) use ($cart) {
+			$arr['quantity'] = $cart[$arr['id']]['quantity'];
+			$arr['total'] = $cart[$arr['id']]['quantity'] * $arr['price'];
+			$arr['size'] =  $cart[$arr['id']]['size'];
+			return $arr;
+		}, $goods);
+		return $goods;
+	}
 }
