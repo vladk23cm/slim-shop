@@ -61,6 +61,7 @@ class CartController extends Controller
 		$result = array_map(function ($arr) use ($cart) {
 			$arr['quantity'] = $cart[$arr['id']]['quantity'];
 			$arr['total'] = $cart[$arr['id']]['quantity'] * $arr['price'];
+			$arr['size'] =  $cart[$arr['id']]['size'];
 			return $arr;
 		}, $goods);
 		print_r($result);

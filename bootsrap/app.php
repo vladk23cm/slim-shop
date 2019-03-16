@@ -58,12 +58,14 @@ $container['CartController'] = function ($container) {
 $container['CategorieController'] = function ($container) {
 	return new \App\Controllers\CategorieController($container);
 };
+$container['CheckoutController'] = function ($container) {
+    return new \App\Controllers\CheckoutController($container);
+};
 
-$function = new Twig_SimpleFunction('count', function () use ($container) {
-  return count($container->cart->all());
-});
 
-$container->get('view')->getEnvironment()->addFunction($function);
+$container['validator'] = function () {
+    return new Awurth\SlimValidation\Validator();
+};
 
 require ROOT . '/app/routes.php';
 

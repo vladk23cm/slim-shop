@@ -14,6 +14,9 @@ $app->get('/api/cart/remove/{id:[0-9]+}', 'CartController:remove');
 $app->get('/api/cart/all', 'CartController:all');
 $app->get('/api/cart/count', 'CartController:count');
 $app->get('/cart', 'CartController:index');
+// checkout
+$app->get('/checkout', 'CheckoutController:index');
+$app->get('/checkout/store', 'CheckoutController:store');
 
 $app->get('/', 'IndexController:index');
 // $app->get('{vue:[\/\w\.-]*}', function ($req, $res, $prop) {
