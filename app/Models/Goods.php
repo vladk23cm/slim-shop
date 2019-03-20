@@ -22,6 +22,6 @@ class Goods extends Model
 			$arr['size'] =  $cart[$arr['id']]['size'];
 			return $arr;
 		}, $goods);
-		return $goods;
+		return $result;
 	}
 }

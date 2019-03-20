@@ -53,10 +53,13 @@ class CartController extends Controller
 	{
 	
 		
-		$result = Goods::getCartItems($this->cart->all());
+		$goods = Goods::getCartItems($this->cart->all());
 		print_r($result);
 		return $this->view->render($res, 'cart.html', [
-      		'goods' => $result
+      		'goods' => $goods,
+      		'total_price' => array_sum(array_map( function ($arr) {
+      			return $arr['price'] * $arr['quantity'];
+      		}, $goods))
     	]);
 	}
 
