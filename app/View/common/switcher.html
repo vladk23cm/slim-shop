@@ -1,0 +1,10 @@
+<ul class="lang-switcher">
+	{% for language in languages %}
+    	<li><a href="{{ path_for('language-changer', {id: language.id })}}" 
+    		{% if language.id == current %}
+    			class="is-active"
+			{% endif %}	
+    		>{{ language.short }}</a></li>
+    	
+    {% endfor %}
+</ul>

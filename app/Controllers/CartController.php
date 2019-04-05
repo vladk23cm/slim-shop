@@ -7,13 +7,7 @@ use \App\Models\Goods;
 
 class CartController extends Controller
 {
-	public function __construct($container)
-	{
-		parent::__construct($container);
-		
-		$this->cart->restore();	
-	}
-
+	
 	public function add($req, $res, $prop)
 	{
 		$post = $req->getParsedBody();
@@ -51,24 +45,23 @@ class CartController extends Controller
 
 	public function index($req, $res)
 	{
-	
+		$data = $this->data();
+
 		
-		$goods = Goods::getCartItems($this->cart->all());
-		print_r($result);
-		return $this->view->render($res, 'cart.html', [
-      		'goods' => $goods,
-      		'total_price' => array_sum(array_map( function ($arr) {
-      			return $arr['price'] * $arr['quantity'];
-      		}, $goods))
-    	]);
+		$data['goods'] = Goods::getCartItems($this->cart->all());
+
+		$data['total_price'] = array_sum(array_map( function ($arr) {
+      		return $arr['price'] * $arr['quantity'];
+      	}, $data['goods']));
+
+		return $this->view->render($res, 'cart.html', $data);
 	}
 
-	public function count($req, $res)
+	public function getCart()
 	{
-		$quantity = array_map(function ($arr) {
-			return $arr['quantity'];
-		}, $this->cart->all());
-		$sum = array_sum($quantity);
-		return $res->getBody()->write($sum);	
+		$data = [];
+		$data['quantity'] = $this->cart->count();
+		return $this->render('cart', $data);
 	}
+
 } 

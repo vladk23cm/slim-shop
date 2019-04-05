@@ -49,7 +49,14 @@ $container['db'] = function () use ($capsule) {
 };
 
 $container['cart'] = function ($container) {
-	return new \Vladk23cm\Cart\Cart('cart', new Vladk23cm\Cart\Storage\SessionStore);
+    $cart = new \Vladk23cm\Cart\Cart('cart', new Vladk23cm\Cart\Storage\SessionStore);
+    $cart->restore(); 
+	return $cart;
+};
+
+$container['config'] = \App\Models\Config::getConfig();
+$container['common'] = function ($container) {
+    return new \App\Controllers\CommonController($container);
 };
 
 $container['IndexController'] = function ($container) {
@@ -68,11 +75,20 @@ $container['CheckoutController'] = function ($container) {
     return new \App\Controllers\CheckoutController($container);
 };
 
+$container['LanguageController'] = function ($container) {
+    return new \App\Controllers\LanguageController($container);
+};
+
+$container['lang'] = function ($container) {
+    return new \Kappa\PageTranslator( ROOT . '\app\Language', $container->user->getParameter('language')->short);
+};
 
 $container['validator'] = function () {
     return new Awurth\SlimValidation\Validator();
 };
-
+$container['user'] = function () {
+    return new Kappa\User;
+};
 require ROOT . '/app/routes.php';
 
 $app->run();

@@ -751,3 +751,72 @@ a {
   width: 120px;
   border-radius: 50%;
   margin-bottom: 20px; }
+
+* {
+  box-sizing: border-box;
+}
+
+/* lang-swicher */
+/* Markup
+
+    ul.lang-switcher>li>a
+
+ */
+.lang-switcher {
+  display: inline-block;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+.lang-switcher li {
+  display: inline-block;
+  border-right: 1px solid #529427;
+  float: left;
+}
+.lang-switcher li:last-child {
+  border-right: none;
+}
+.lang-switcher li a {
+  padding: 3px 5px;
+  color: #529427;
+  transition: all 0.5s ease;
+  text-decoration: none;
+  display: inline-block;
+  height: 100%;
+  min-width: 40px;
+  text-align: center;
+}
+.lang-switcher li a:hover {
+  text-decoration: none;
+}
+.lang-switcher li a.is-active {
+  color: #000000;
+  cursor: default;
+}
+
+/* modifiers */
+.lang-switcher.lang-switcher--pill, .lang-switcher.lang-switcher--rounded-pill {
+  border: 1px solid #529427;
+}
+.lang-switcher.lang-switcher--pill a:hover, .lang-switcher.lang-switcher--rounded-pill a:hover {
+  background: #529427;
+  color: #ffffff;
+}
+.lang-switcher.lang-switcher--pill a.is-active, .lang-switcher.lang-switcher--rounded-pill a.is-active {
+  background-color: #529427;
+  color: #ffffff;
+}
+
+.lang-switcher.lang-switcher--rounded-pill {
+  border-radius: 15px;
+}
+.lang-switcher.lang-switcher--rounded-pill li:first-child a {
+  padding-left: 10px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+.lang-switcher.lang-switcher--rounded-pill li:last-child a {
+  padding-right: 10px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}

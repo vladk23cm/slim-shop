@@ -10,14 +10,13 @@ class CheckoutController extends Controller
 {
 	public function index($req, $res, $args)
 	{
+		$data = $this->data();
 		$cart = $this->cart->all();
 		
-		$goods = Goods::getCartItems($cart);
+		$data['goods'] = Goods::getCartItems($cart);
 
-
-		return $this->view->render($res, 'checkout.html', [
-        	
-    	]);
+      	
+		return $this->view->render($res, 'checkout.html', $data);
 	}
 
 	public function store($req, $res, $args)

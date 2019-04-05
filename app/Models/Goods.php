@@ -15,7 +15,12 @@ class Goods extends Model
 
 	public function getCartItems($cart)
 	{
-		$goods = Goods::find(array_keys($cart))->toArray();
+		$goods = Goods::find(array_keys($cart));
+		
+		if (!$goods) {
+			return [];
+		}
+		$goods = $goods->toArray();
 		$result = array_map(function ($arr) use ($cart) {
 			$arr['quantity'] = $cart[$arr['id']]['quantity'];
 			$arr['total'] = $cart[$arr['id']]['quantity'] * $arr['price'];

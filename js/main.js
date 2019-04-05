@@ -7,9 +7,7 @@
 jQuery(document).ready(function($) {
 
 	"use strict";
-	$.ajax('http://slim/api/cart/count',).done(function(count) {
-  		$('#cartcount').text(count);
-	});
+	
 	
 
 	var slider = function() {
