@@ -30,10 +30,11 @@
           <div class="row align-items-center">
   
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-              <form action="" class="site-block-top-search">
-                <span class="icon icon-search2"></span>
-                <input type="text" class="form-control border-0" placeholder="{{ lang.search }}">
-              </form>
+              {% for item in left %}
+    
+                     {{ item | raw }}
+
+                  {% endfor %}
             </div>
 
             <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
@@ -58,18 +59,7 @@
           </div>
         </div>
       </div> 
-      <nav class="site-navigation text-right text-md-center" role="navigation">
-        <div class="container">
-          <ul class="site-menu js-clone-nav d-none d-md-block">
-            <li class="active">
-              <a href="/">{{ lang.home }}</a>
-            </li>
-            <li><a href="{{ path_for('categorie', { id: 2 }) }}">{{ lang.t_shirts }}</a></li>
-            <li><a href="{{ path_for('categorie', { id: 5 }) }}">{{ lang.sweatshirts }}</a></li>
-            <li><a href="{{ path_for('categorie', { id: 3 }) }}">{{ lang.hoodies }}</a></li>
-            <li><a href="{{ path_for('categorie', { id: 4 }) }}">{{ lang.bags }}</a></li>
-           
-          </ul>
-        </div>
-      </nav>
+      {{ menu | raw }}
+
     </header>
+{% include "common/messages.html" %}

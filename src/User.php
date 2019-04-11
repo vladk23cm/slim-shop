@@ -3,14 +3,19 @@
 namespace Kappa;
 
 use App\Models\User as Model;
-
+use App\Models\Language;
 class User
 {
-	public $user;
+	public static $user;
 
-	public function __construct()
+	public static $instance = null;
+
+	public function getInstance()
 	{
-		$this->user = $this->getUser();
+		if (self::$instance === null ){
+			self::$instance = self::getUser();
+		}
+		return self::$instance;
 	}
 	public function getIp()
 	{
@@ -32,16 +37,33 @@ class User
  
     	return $ipaddress;
 	}
-
-	public function getUser()
+	private function __construct($user)
 	{
-		$ip = $this->getIp();
+		$this->user = $user;
+	}
+	private function getUser()
+	{
+		$ip = self::getIp();
 		$user = Model::firstOrCreate(['ip' => $ip]);
-		return $user;
+		$instance = new self($user);
+		return $instance;
 	}
 
-	public function getParameter($name)
+	public function changeLang($id)
+	{
+		$language = Language::find($id);
+		
+		if ($language) {
+			$this->user
+				->update([
+					'language_id' => $language->id
+				]);
+			$this->user->save();
+		}
+	}
+
+	public function __get($name)
 	{
 		return $this->user->$name;
-	}	
+	}
 }

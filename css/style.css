@@ -770,7 +770,7 @@ a {
 }
 .lang-switcher li {
   display: inline-block;
-  border-right: 1px solid #529427;
+  border-right: 1px solid #e21616;
   float: left;
 }
 .lang-switcher li:last-child {
@@ -778,7 +778,7 @@ a {
 }
 .lang-switcher li a {
   padding: 3px 5px;
-  color: #529427;
+  color: #0019ff;
   transition: all 0.5s ease;
   text-decoration: none;
   display: inline-block;

@@ -22,6 +22,7 @@ $container = $app->getContainer();
 // Register component on container
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig('app/View/', [
+        'debug' => true,
         'cache' => false
     ]);
 
@@ -29,6 +30,8 @@ $container['view'] = function ($container) {
     $router = $container->get('router');
     $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
     $view->addExtension(new Slim\Views\TwigExtension($router, $uri));
+    
+    $view->addExtension(new \Twig\Extension\DebugExtension());
 
 
     $view->addExtension(
@@ -47,13 +50,16 @@ $capsule->bootEloquent();
 $container['db'] = function () use ($capsule) {
 	return $capsule;
 };
-
+$user = \Kappa\User::getInstance();
+$container['flash'] = function () {
+    return new \Slim\Flash\Messages();
+};
 $container['cart'] = function ($container) {
     $cart = new \Vladk23cm\Cart\Cart('cart', new Vladk23cm\Cart\Storage\SessionStore);
     $cart->restore(); 
-	return $cart;
+    $rc = new \Kappa\Cart($cart, $container);
+    return $rc;
 };
-
 $container['config'] = \App\Models\Config::getConfig();
 $container['common'] = function ($container) {
     return new \App\Controllers\CommonController($container);
@@ -79,15 +85,15 @@ $container['LanguageController'] = function ($container) {
     return new \App\Controllers\LanguageController($container);
 };
 
-$container['lang'] = function ($container) {
-    return new \Kappa\PageTranslator( ROOT . '\app\Language', $container->user->getParameter('language')->short);
+$container['lang'] = function ($container) use ($user) {
+    return new \Kappa\PageTranslator( ROOT . '\app\Language', $user->language->short);
 };
 
 $container['validator'] = function () {
     return new Awurth\SlimValidation\Validator();
 };
-$container['user'] = function () {
-    return new Kappa\User;
+$container['user'] = function () use ($user) {
+    return $user;
 };
 require ROOT . '/app/routes.php';
 

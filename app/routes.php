@@ -4,15 +4,16 @@
 //
 
 $app->get('/shop', 'GoodsController:index')->setName('shop');
-$app->get('/goods/{id:[0-9]+}', 'GoodsController:single');
+$app->get('/goods/{slug}', 'GoodsController:single')->setName('product');
 
 $app->get('/categories/', 'CategorieController:index');
-$app->get('/categorie/{id:[0-9]+}', 'CategorieController:single')->setName('categorie');
+$app->get('/categorie/{slug}', 'CategorieController:single')->setName('categorie');
 
 $app->post('/api/cart/add/{id:[0-9]+}', 'CartController:add');
 $app->get('/api/cart/remove/{id:[0-9]+}', 'CartController:remove');
 $app->get('/api/cart/all', 'CartController:all');
 $app->get('/api/cart/count', 'CartController:count');
+$app->get('/api/cart/flush', 'CartController:flush');
 $app->get('/cart', 'CartController:index')->setName('cart');
 // checkout
 $app->get('/checkout', 'CheckoutController:index');

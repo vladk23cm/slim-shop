@@ -26,9 +26,8 @@ class Controller
 	// Костыль ЫЫЫ
 	public function data()
 	{
-		$this->data['header'] = $this->common->getHeader();
-      	$this->data['footer'] = $this->common->getFooter();
-
+      	
+      	
       	
       	return $this->data;
 	}

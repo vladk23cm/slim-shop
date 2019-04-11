@@ -11,10 +11,23 @@ class CheckoutController extends Controller
 	public function index($req, $res, $args)
 	{
 		$data = $this->data();
-		$cart = $this->cart->all();
 		
-		$data['goods'] = Goods::getCartItems($cart);
+		$cart = $this->cart->all();
+		$goods = Goods::find(array_keys($cart));
+		if ($goods) {
+			$goods = array_map( function ($arr) use ($cart){
 
+				$quantity = $cart[$arr['id']]['quantity'];
+				$arr['total'] = $quantity * $arr['price'];
+				$arr['quantity'] = $quantity;
+				$arr['size'] = $cart[$arr['id']]['size'];
+				return $arr;
+			}, $goods->toArray());
+		}
+		$data['goods'] = $goods;
+		
+		$data['header'] = $this->common->getHeader();
+		$data['footer'] = $this->common->getFooter();
       	
 		return $this->view->render($res, 'checkout.html', $data);
 	}

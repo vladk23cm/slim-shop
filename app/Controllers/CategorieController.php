@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use \App\Controllers\Controller;
 use \App\Models\Categorie;
+use \App\Models\Goods;
 
 class CategorieController extends Controller
 {
@@ -11,23 +12,26 @@ class CategorieController extends Controller
 		$data = $this->data();
 
 		$data['categories'] = Categorie::all();
-
+		$data['header'] = $this->common->getHeader();
+		$data['footer'] = $this->common->getFooter();
 		return $res->withJson($categories->toArray());
 	}
 
 	public function single($req, $res, $args)
 	{
+		$user = $this->user;
 		$data = $this->data();
-
-		$cat = Categorie::find($args['id']);
 		
-		if (!$cat) {
-			return  new \Slim\Http\Response(404);
+		$categorie = Categorie::where('slug', $args['slug'])->first();
+		if ($user->language_id != $categorie->language_id) {
+			$this->user->changeLang($categorie->language_id, $user->language_id);
 		}
+		$goods = $categorie->goods;
 
-		$data['goods'] = $cat->goods->toArray();
+		$data['goods'] = $goods;
 
-		$cat_array = $cat->toArray();
+		$data['header'] = $this->common->getHeader();
+		$data['footer'] = $this->common->getFooter();
 
 		return $this->view->render($res, 'shop.html', $data);
 		

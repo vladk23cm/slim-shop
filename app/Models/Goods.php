@@ -3,30 +3,21 @@
 namespace App\Models;
 
 use \Illuminate\Database\Eloquent\Model;
+use \App\Models\Translation;
 
 class Goods extends Model
 {
 	protected $table = 'goods';
 
+	
 	public function categorie()
 	{
 		return $this->belongsTo('App\Models\Categorie');
 	}
 
-	public function getCartItems($cart)
+	public function language()
 	{
-		$goods = Goods::find(array_keys($cart));
-		
-		if (!$goods) {
-			return [];
-		}
-		$goods = $goods->toArray();
-		$result = array_map(function ($arr) use ($cart) {
-			$arr['quantity'] = $cart[$arr['id']]['quantity'];
-			$arr['total'] = $cart[$arr['id']]['quantity'] * $arr['price'];
-			$arr['size'] =  $cart[$arr['id']]['size'];
-			return $arr;
-		}, $goods);
-		return $result;
+		return $this->belongsTo('\App\Models\Language');
 	}
+
 }

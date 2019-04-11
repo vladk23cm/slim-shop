@@ -4,7 +4,8 @@ namespace App\Controllers;
 use \App\Controllers\Controller;
 use \App\Models\Language;
 use \App\Models\Ip;
-use \App\Models\User;
+
+use \Kappa\User;
 
 
 class LanguageController extends Controller
@@ -12,16 +13,11 @@ class LanguageController extends Controller
 
 	public function change($req, $res, $args)
 	{
-		$language = Language::find($args['id']);
-		if ($language) {
-			User::find($this->user->getParameter('id'))
-				->update([
-					'language_id' => $language->id
-				]);
-
-
-			return $res->withRedirect($_SERVER['HTTP_REFERER'], 301);
-		}
+		global $user;
+		$this->user->changeLang($args['id']);
+		$this->cart->flush();					
+		return $res->withRedirect('/', 301);
+		
 
 	}
 
@@ -29,7 +25,7 @@ class LanguageController extends Controller
 	{
 		$data = [];
 		$data['languages'] = Language::all()->toArray();
-		$data['current'] = $this->user->getParameter('language_id');
+		$data['current'] = $this->user->language_id;
 		return $this->render('switcher', $data);
 	}	
 }

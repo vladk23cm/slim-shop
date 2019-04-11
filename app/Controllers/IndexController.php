@@ -10,7 +10,8 @@ class IndexController extends Controller
 	public function index($req, $res, $args)
 	{
 		$data = $this->data(); 	
-		
+		$data['header'] = $this->common->getHeader();
+		$data['footer'] = $this->common->getFooter();
 		return $this->view->render($res, 'index.html', $data);
 	}
 }
