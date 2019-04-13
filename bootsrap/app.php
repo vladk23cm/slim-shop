@@ -89,8 +89,9 @@ $container['lang'] = function ($container) use ($user) {
     return new \Kappa\PageTranslator( ROOT . '\app\Language', $user->language->short);
 };
 
-$container['validator'] = function () {
-    return new Awurth\SlimValidation\Validator();
+$container['validator'] = function ($container) {
+    $translations = $container->lang->translate('validator');
+    return new Awurth\SlimValidation\Validator(true, $translations);
 };
 $container['user'] = function () use ($user) {
     return $user;

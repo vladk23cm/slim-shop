@@ -8,6 +8,7 @@ $app->get('/goods/{slug}', 'GoodsController:single')->setName('product');
 
 $app->get('/categories/', 'CategorieController:index');
 $app->get('/categorie/{slug}', 'CategorieController:single')->setName('categorie');
+$app->get('/categories/random', 'CategorieController:random')->setName('random_categorie');
 
 $app->post('/api/cart/add/{id:[0-9]+}', 'CartController:add');
 $app->get('/api/cart/remove/{id:[0-9]+}', 'CartController:remove');
@@ -18,6 +19,7 @@ $app->get('/cart', 'CartController:index')->setName('cart');
 // checkout
 $app->get('/checkout', 'CheckoutController:index');
 $app->post('/checkout', 'CheckoutController:index');
+$app->get('/thanks', 'CheckoutController:thanks')->setName('thanks');
 // languages
 $app->get('/change-language/{id:[0-9]+}', 'LanguageController:change')->setName('language-changer');
 $app->get('/', 'IndexController:index');

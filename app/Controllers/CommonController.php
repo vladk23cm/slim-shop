@@ -33,7 +33,7 @@ class CommonController extends Controller
 	
 	public function getMenu()
 	{
-		$categories = $this->user->language->categories->toArray();
+		$categories = $this->user->language->categories;
 		$data = [];
 		$data['lang'] = $this->lang->translate('common/menu');
 		$data['categories'] = $categories;
@@ -42,10 +42,10 @@ class CommonController extends Controller
 
 	public function getFeatured()
 	{
-		$products = $this->user->language->goods;
+		$products = $this->user->language->goods->shuffle()->take(6);
 		$data = [];
 		$data['lang'] = $this->lang->translate('common/featured');
-		$data['goods'] = $products->toArray();
+		$data['goods'] = $products;
 		return $this->render('featured', $data);
 	}
 

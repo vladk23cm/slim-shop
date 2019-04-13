@@ -6,23 +6,32 @@
           <form action="" method="post">
         <div class="row">
           <div class="col-md-6 mb-5 mb-md-0">
-            <h2 class="h3 mb-3 text-black">Billing Details</h2>
+            <h2 class="h3 mb-3 text-black">{{lang.billing}}</h2>
             <div class="p-3 p-lg-5 border">
-              {{ dump(errors()) }}
+             
               <div class="form-group">
-                <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
-                <input id="c_country" class="form-control" style="pointer-events:none;" value="Украина">
+                <label for="c_country" class="text-black">{{lang.country}} <span class="text-danger">*</span></label>
+                <input id="c_country" class="form-control" style="pointer-events:none;" value="{{lang.ukrain}}">
                    
                
               </div>
               <div class="form-group row">
                 <div class="col-md-6">
-                  <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                  <label for="c_fname" class="text-black">{{lang.first_name}}<span class="text-danger">*</span></label>
+                  {% if has_error('first_name') %}
+                    <div class="alert alert-danger" role="alert">
+                       {{ error('first_name') }}
+                    </div>
+                   {% endif %}
                   <input type="text" class="form-control" id="first_name" name="first_name" value="{{ val('first_name') }}">
                 </div>
                 <div class="col-md-6">
-                   {% if has_error('last_name') %}<span>{{ error('last_name') }}</span>{% endif %}
-                  <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                  <label for="c_lname" class="text-black">{{lang.last_name}}<span class="text-danger">*</span></label>
+                   {% if has_error('last_name') %}
+                    <div class="alert alert-danger" role="alert">
+                       {{ error('last_name') }}
+                    </div>
+                   {% endif %}
                   <input type="text" class="form-control" name="last_name" value="{{ val('last_name') }}">
                 </div>
               </div>
@@ -31,26 +40,51 @@
 
               <div class="form-group row">
                 <div class="col-md-12">
-                  <label for="c_address" class="text-black">Адреса <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="address" name="street_address" placeholder="Вулиця" value="{{ val('street_address') }}">
+                  <label for="c_address" class="text-black">{{lang.adress}} <span class="text-danger">*</span></label>
+                  {% if has_error('street_address') %}
+                    <div class="alert alert-danger" role="alert">
+                       {{ error('street_address') }}
+                    </div>
+                   {% endif %}
+                  <input type="text" class="form-control" id="address" name="street_address" placeholder="{{lang.street}}" value="{{ val('street_address') }}">
                 </div>
               </div>
 
               <div class="form-group">
-                <input type="text" class="form-control" name="house_address" placeholder="Дом" value="{{ val('house_address') }}">
+                {% if has_error('house_address') %}
+                    <div class="alert alert-danger" role="alert">
+                       {{ error('house_address') }}
+                    </div>
+                   {% endif %}
+                <input type="text" class="form-control" name="house_address" placeholder="{{lang.house}}" value="{{ val('house_address') }}">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="flat_address" placeholder="Номер квартиры (опционально)" value="{{ val('flat_address') }}">
+                {% if has_error('flat_address') %}
+                    <div class="alert alert-danger" role="alert">
+                       {{ error('flat_address') }}
+                    </div>
+                   {% endif %}
+                <input type="text" class="form-control" name="flat_address" placeholder="{{lang.flat}} ({{lang.optional}})" value="{{ val('flat_address') }}">
               </div>
 
 
               <div class="form-group row">
                 <div class="col-md-6">
-                  <label for="c_state_country" class="text-black">Город <span class="text-danger">*</span></label>
+                  <label for="c_state_country" class="text-black">{{lang.town}} <span class="text-danger">*</span></label>
+                  {% if has_error('town') %}
+                    <div class="alert alert-danger" role="alert">
+                       {{ error('town') }}
+                    </div>
+                   {% endif %}
                   <input type="text" class="form-control" name="town" value="{{ val('town') }}">
                 </div>
                 <div class="col-md-6">
-                  <label for="c_postal_zip" class="text-black">Zip <span class="text-danger">*</span></label>
+                  <label for="c_postal_zip" class="text-black">{{lang.zip}} <span class="text-danger">*</span></label>
+                  {% if has_error('zip') %}
+                    <div class="alert alert-danger" role="alert">
+                       {{ error('zip') }}
+                    </div>
+                   {% endif %}
                   <input type="text" class="form-control" id="c_postal_zip" name="zip" value="{{ val('zip') }}">
                 </div>
               </div>
@@ -58,11 +92,21 @@
               <div class="form-group row mb-5">
                 <div class="col-md-6">
                   <label for="c_email_address" class="text-black">Email <span class="text-danger">*</span></label>
+                  {% if has_error('email') %}
+                    <div class="alert alert-danger" role="alert">
+                       {{ error('email') }}
+                    </div>
+                   {% endif %}
                   <input type="text" class="form-control" id="c_email_address" name="email" value="{{ val('email') }}">
                 </div>
                 <div class="col-md-6">
-                  <label for="c_phone" class="text-black">Телефон <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_phone" name="phone" placeholder="Phone Number" value="{{ val('phone') }}">
+                  <label for="c_phone" class="text-black">{{lang.phone}} <span class="text-danger">*</span></label>
+                  {% if has_error('phone') %}
+                    <div class="alert alert-danger" role="alert">
+                       {{ error('phone') }}
+                    </div>
+                   {% endif %}
+                  <input type="text" class="form-control" id="c_phone" name="phone" placeholder="{{lang.phone_number}}" value="{{ val('phone') }}">
                 </div>
               </div>
 
@@ -72,8 +116,9 @@
              
 
               <div class="form-group">
-                <label for="c_order_notes" class="text-black">Пожелание к заказу</label>
-                <textarea name="order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
+
+                <label for="c_order_notes" class="text-black">{{lang.wish}}</label>
+                <textarea name="order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="{{lang.write_here}}"></textarea>
               </div>
 
             </div>
@@ -84,22 +129,22 @@
             
             <div class="row mb-5">
               <div class="col-md-12">
-                <h2 class="h3 mb-3 text-black">Your Order</h2>
+                <h2 class="h3 mb-3 text-black">{{lang.your_order}}</h2>
                 <div class="p-3 p-lg-5 border">
                   <table class="table site-block-order-table mb-5">
                     <thead>
-                      <th>Product</th>
-                      <th>Total</th>
+                      <th>{{lang.product}}</th>
+                      <th>{{lang.total}}</th>
                     </thead>
                     <tbody>
                       {% for item in goods %}
                       <tr>
-                        <td>{{ item.title }}<strong class="mx-2">x</strong> {{ item.quantity }}</td>
+                        <td><a href="{{path_for('product',{slug:item.slug})}}">{{ item.title }}</a><strong class="mx-2">x</strong> {{ item.quantity }} <strong class="mx-2">x</strong> {{item.size}}</td>
                         <td>₴ {{ item.total }}</td>
                       </tr>
                       {%endfor%}
                       <tr>
-                        <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                        <td class="text-black font-weight-bold"><strong>{{lang.order_total}}</strong></td>
                         <td class="text-black font-weight-bold"><strong>₴ {{total_price}}</strong></td>
                       </tr>
                     </tbody>
@@ -111,7 +156,7 @@
                   
 
                   <div class="form-group">
-                    <button class="btn btn-primary btn-lg py-3 btn-block">Place Order</button>
+                    <button class="btn btn-primary btn-lg py-3 btn-block">{{ lang.place }}</button>
                   </div>
 
                 </div>

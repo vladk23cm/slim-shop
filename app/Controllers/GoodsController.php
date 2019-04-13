@@ -22,9 +22,11 @@ class GoodsController extends Controller
 	{
 		$data = $this->data();
 		$item = Goods::where('slug', $args['slug'])->first();
-		global $user;
-		if ($user->language_id != $item->language_id) {
+		
+		
+		if ($this->user->language_id != $item->language_id) {
 			$this->user->changeLang($item->language_id, $user->language_id);
+			return $res->withRedirect($req->getUri()->getPath());
 		}
 		if (!$item) {
 			return  new \Slim\Http\Response(404);

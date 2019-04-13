@@ -43,6 +43,11 @@ class Cart
 
 	}
 
+	public function isEmpty()
+	{
+		return empty($this->cart->all());
+
+	}
 	public function __call($method, $args)
 	{
 		return $this->cart->$method($args);

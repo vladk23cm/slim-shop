@@ -12,7 +12,7 @@
               <div class="item">
                 <div class="block-4 text-center">
                   <figure class="block-4-image">
-                    <img src="/images/{{item.image}}.jpg" alt="Image placeholder" class="img-fluid">
+                   <a href="{{path_for('product', {slug:item.slug})}}"> <img src="/images/{{item.image}}.jpg" alt="Image placeholder" class="img-fluid"></a>
                   </figure>
                   <div class="block-4-text p-4">
                     <h3><a href="{{path_for('product', {slug:item.slug})}}">{{item.title}}</a></h3>

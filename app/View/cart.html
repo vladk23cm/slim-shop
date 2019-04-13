@@ -32,7 +32,7 @@
                     <td class="product-name">
                       <a href="{{ path_for('product', {slug:item.slug})}}"><h2 class="h5 text-black">{{ item.size }}</h2></a>
                     </td>
-                    <td>${{ item.price }}</td>
+                    <td>₴{{ item.price }}</td>
                     <td>
                       <div class="mb-3" style="max-width: 120px;">
                         
@@ -40,7 +40,7 @@
                       </div>
 
                     </td>
-                    <td>${{ item.total }}</td>
+                    <td>₴{{ item.total }}</td>
                     <td><a href="/api/cart/remove/{{ item.id }}" class="btn btn-primary btn-sm">X</a></td>
                   </tr>
 
@@ -56,7 +56,7 @@
             <div class="row mb-5">
              
               <div class="col-md-8">
-                <button class="btn btn-outline-primary btn-sm btn-block">{{lang.continue}}</button>
+                <a class="btn btn-outline-primary btn-sm btn-block" href="{{path_for('random_categorie')}}">{{lang.continue}}</a>
               </div>
             </div>
             
@@ -69,23 +69,23 @@
                     <h3 class="text-black h4 text-uppercase">{{lang.cart_totals}}</h3>
                   </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-12">
                 
-                <div class="row mb-5">
-                  <div class="col-md-6">
-                    <span class="text-black">{{lang.total}}</span>
+                  <div class="row mb-5">
+                    <div class="col-md-6">
+                      <span class="text-black">{{lang.total}}</span>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <strong class="text-black">₴{{ total_price }}</strong>
+                    </div>
                   </div>
-                  <div class="col-md-6 text-right">
-                    <strong class="text-black">${{ total_price }}</strong>
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="col-md-12">
-                    <a class="btn btn-primary btn-lg py-3 btn-block" href="/checkout">{{lang.to_checkout}}</a>
+                  <div class="row col-12">
+                    <div class="col-md-12">
+                      <a class="btn btn-primary btn-lg py-3 btn-block" href="/checkout">{{lang.to_checkout}}</a>
+                    </div>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@
       Корзина пустая:
       <div class="col-lg-3 col-sm-6">
   
-          <a href="/categorie/2" class="btn btn-outline-primary btn-sm btn-block">{{lang.continue}}</a>
+          <a href="{{path_for('random_categorie')}}" class="btn btn-outline-primary btn-sm btn-block">{{lang.continue}}</a>
       </div>
     </div>
     {% endif%}

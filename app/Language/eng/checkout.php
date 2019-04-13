@@ -1,0 +1,26 @@
+<?php
+
+return [
+	'title' => 'Checkout',
+	'country' => 'Country',
+	'ukrain' => 'Ukraine',
+	'first_name' => 'First name',
+	'last_name' => 'Last name',
+	'adress' => 'Adress',
+	'street' => 'Street',
+	'house' => 'House',
+	'flat' => 'Flat number',
+	'optional' => 'optional',
+	'town' => 'Town',
+	'phone' => 'Phone',
+	'phone_number' => 'Phone number',
+	'wish' => 'Wish to order',
+	'write_here' => 'Write your notes here...',
+	'your_order' => 'Your Order',
+	'product' => 'Product',
+	'total' => 'Total',
+	'zip' => 'Zip',
+	'order_total' => 'Order Total',
+	'billing' => 'Billing Details',
+	'place' => 'Place order',
+];

@@ -1,5 +1,5 @@
 <?php
 
 return [
-	'featured' => 'Колабы'
+	'featured' => 'Также покупают'
 ];

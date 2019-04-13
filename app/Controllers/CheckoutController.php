@@ -10,24 +10,28 @@ class CheckoutController extends Controller
 {
 	public function index($req, $res, $args)
 	{
+		
+		if ($this->cart->isEmpty()) {
+			return $res->withRedirect('/');
+		}
 		$data = $this->data();
 		if ($req->isPost()) {
 			
         	$this->validator->validate($req, [
-	            'first_name' 		=> V::length(2, 25),
-	    		'last_name' 		=> V::length(2, 25),
-	    		'street_address'    => V::length(2, 25),
-	    		'house_address'    	=> V::length(2, 25),
-	    		'flat_address'    	=> V::length(2, 25),
-	    		'town'   			=> V::length(2, 25),
-	    		'zip'    			=> V::length(2, 25),
-	    		'email'    			=> V::length(2, 25),
-	    		'phone'    			=> V::length(2, 25),
-				'order_notes'    	=> V::length(2, 25),
+	            'first_name' 		=> V::notBlank()->length(2, 25)->noWhitespace(),
+	    		'last_name' 		=> V::notBlank()->length(2, 25)->noWhitespace(),
+	    		'street_address'    => V::notBlank()->length(2, 25),
+	    		'house_address'    	=> V::notBlank()->length(1, 25)->noWhitespace()->numeric(),
+	    		'flat_address'    	=> V::length(0, 25),
+	    		'town'   			=> V::notBlank()->length(2, 25),
+	    		'zip'    			=> V::notBlank()->numeric()->length(2, 25),
+	    		'email'    			=> V::notBlank()->length(6, 254)->email(),
+	    		'phone'    			=> V::notBlank()->length(9, 15)->numeric(),
+				'order_notes'    	=> V::length(0, 200),
    			 ]);
         
         	if ($this->validator->isValid()) {
-            	die;
+            	return $res->withRedirect($this->router->pathFor('thanks'));
             }
             
         	
@@ -49,25 +53,20 @@ class CheckoutController extends Controller
 		$data['total_price'] = array_sum(array_map( function ($arr) {
       		return $arr['price'] * $arr['quantity'];
       	}, $data['goods']));
-		$data['header'] = $this->common->getHeader();
+      	$data['lang'] = $this->lang->translate('checkout');
+		$data['header'] = $this->common->getHeader($data['lang']['title']);
 		$data['footer'] = $this->common->getFooter();
       	
 		return $this->view->render($res, 'checkout.html', $data);
 	}
 	
-	private function store($req, $res, $args)
+	public function thanks($req, $res)
 	{
-		
-		
-		$validator = $this->validator->validate($req, [
-    		
+		$data = $this->data();
+		$data['lang'] = $this->lang->translate('thanks');
+		$data['header'] = $this->common->getHeader($data['lang']['title']);
+		$data['footer'] = $this->common->getFooter();
 
-		]);
-
-		if ($validator->isValid()) {
-    		
-		} else {
-    		return $res->withRedirect($_SERVER['HTTP_REFERER'], 301);
-		}	
+		return $this->view->render($res, 'thanks.html', $data);
 	}
 }
