@@ -17,7 +17,7 @@ $app->get('/api/cart/flush', 'CartController:flush');
 $app->get('/cart', 'CartController:index')->setName('cart');
 // checkout
 $app->get('/checkout', 'CheckoutController:index');
-$app->get('/checkout/store', 'CheckoutController:store');
+$app->post('/checkout', 'CheckoutController:index');
 // languages
 $app->get('/change-language/{id:[0-9]+}', 'LanguageController:change')->setName('language-changer');
 $app->get('/', 'IndexController:index');

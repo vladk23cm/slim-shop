@@ -1,5 +1,6 @@
 <?php
 return [
+	'title' => 'Cart',
 	'image' => 'Image',
 	'product' => 'Product',
 	'price' => 'Price',
@@ -8,6 +9,6 @@ return [
 	'remove' => 'Remove',
 	'cart_totals' => 'CART TOTALS',
 	'continue' => 'CONTINUE SHOPPING',
-	'to_checkout' => 'TO CHECKOUT'
-
+	'to_checkout' => 'TO CHECKOUT',
+	'size' => 'Size'
 ];

@@ -1,5 +1,6 @@
 <?php
 return [
+	'title' => 'Корзина',
 	'image' => 'Image',
 	'product' => 'Product',
 	'price' => 'Price',

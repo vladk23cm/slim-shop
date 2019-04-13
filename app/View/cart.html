@@ -10,7 +10,7 @@
                 <thead>
                   <tr>
                     <th class="product-thumbnail">{{lang.image}}</th>
-                    <th class="product-name">{{lang.product}}</th>
+                    <th class="product-name">{{lang.product}}</th><th class="product-name">{{lang.size}}</th>
                     <th class="product-price">{{lang.price}}</th>
                     <th class="product-quantity">{{lang.quantity}}</th>
                     <th class="product-total">{{lang.total}}</th>
@@ -24,10 +24,13 @@
                 
                   <tr>
                     <td class="product-thumbnail">
-                      <img src="images/{{ item.image }}.jpg" alt="Image" class="img-fluid">
+                      <a href="{{ path_for('product', {slug:item.slug})}}"><img src="images/{{ item.image }}.jpg" alt="Image" class="img-fluid"></a>
                     </td>
                     <td class="product-name">
-                      <h2 class="h5 text-black">{{ item.title }} ({{ item.size }})</h2>
+                      <a href="{{ path_for('product', {slug:item.slug})}}"><h2 class="h5 text-black">{{ item.title }}</h2></a>
+                    </td>
+                    <td class="product-name">
+                      <a href="{{ path_for('product', {slug:item.slug})}}"><h2 class="h5 text-black">{{ item.size }}</h2></a>
                     </td>
                     <td>${{ item.price }}</td>
                     <td>

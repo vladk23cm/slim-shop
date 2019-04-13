@@ -1,5 +1,12 @@
 {% if messages.header %}
+<div class="container">
+<div class="row">
+
 	{% for message in messages.header%}
-		{{ message }}
+	
+	<div class="alert alert-success col" role="alert">
+ 	 	{{ message }}
+	</div>
 	{% endfor %}
+</div></div>
 {% endif %}

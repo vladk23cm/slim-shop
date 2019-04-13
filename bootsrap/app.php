@@ -95,6 +95,9 @@ $container['validator'] = function () {
 $container['user'] = function () use ($user) {
     return $user;
 };
+$container['config'] = function () {
+    return \App\Models\Config::getConfig();
+};
 require ROOT . '/app/routes.php';
 
 $app->run();

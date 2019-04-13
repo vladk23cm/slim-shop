@@ -29,9 +29,11 @@ class GoodsController extends Controller
 		if (!$item) {
 			return  new \Slim\Http\Response(404);
 		}
-      	$data['item'] = $item->toArray();
-      	$data['header'] = $this->common->getHeader();
+      	$data['item'] = $item;
+      	$data['lang'] = $this->lang->translate('single_product');
+      	$data['header'] = $this->common->getHeader($item->title);
 		$data['footer'] = $this->common->getFooter();
+		$data['content'][] = $this->common->getFeatured();
 		return $this->view->render($res, 'single.html', $data);
 		
 	}

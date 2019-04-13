@@ -8,7 +8,7 @@ use \App\Models\Config;
 class CommonController extends Controller
 {
 
-	public function getHeader()
+	public function getHeader($title = '')
 	{
 		$data = [];
 		$data['cart'] = $this->cart->count();
@@ -17,13 +17,16 @@ class CommonController extends Controller
 		$data['right'][] = $this->container->get('CartController')->getCart();
 		$data['messages'] = $this->flash->getMessages();
 		$data['menu'] = $this->getMenu();
+		$data['config'] = $this->config;
+		$data['title'] = $title . ' - ' . $data['config']['name'];
+		
 		return $this->render('header', $data);	
 	}
 
 	public function getFooter()
 	{
 		$data = [];
-		$data['config'] = Config::getConfig();
+		$data['config'] = $this->config;
 		$data['lang'] = $this->lang->translate('common/footer');
 		return $this->render('footer', $data);	
 	}
@@ -35,5 +38,24 @@ class CommonController extends Controller
 		$data['lang'] = $this->lang->translate('common/menu');
 		$data['categories'] = $categories;
 		return $this->render('menu', $data);
+	}
+
+	public function getFeatured()
+	{
+		$products = $this->user->language->goods;
+		$data = [];
+		$data['lang'] = $this->lang->translate('common/featured');
+		$data['goods'] = $products->toArray();
+		return $this->render('featured', $data);
+	}
+
+	public function getCategories()
+	{
+		$categories = $this->user->language->categories->take(3); 
+		
+		$data = [];
+		$data['lang'] = $this->lang->translate('common/categories');
+		$data['categories'] = $categories->toArray();
+		return $this->render('categories', $data);
 	}
 }

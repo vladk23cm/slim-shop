@@ -56,7 +56,7 @@ class CartController extends Controller
 		$data['total_price'] = array_sum(array_map( function ($arr) {
       		return $arr['price'] * $arr['quantity'];
       	}, $data['goods']));
-		$data['header'] = $this->common->getHeader();
+		$data['header'] = $this->common->getHeader($data['lang']['title']);
 		$data['footer'] = $this->common->getFooter();
 		return $this->view->render($res, 'cart.html', $data);
 	}

@@ -11,6 +11,27 @@ class CheckoutController extends Controller
 	public function index($req, $res, $args)
 	{
 		$data = $this->data();
+		if ($req->isPost()) {
+			
+        	$this->validator->validate($req, [
+	            'first_name' 		=> V::length(2, 25),
+	    		'last_name' 		=> V::length(2, 25),
+	    		'street_address'    => V::length(2, 25),
+	    		'house_address'    	=> V::length(2, 25),
+	    		'flat_address'    	=> V::length(2, 25),
+	    		'town'   			=> V::length(2, 25),
+	    		'zip'    			=> V::length(2, 25),
+	    		'email'    			=> V::length(2, 25),
+	    		'phone'    			=> V::length(2, 25),
+				'order_notes'    	=> V::length(2, 25),
+   			 ]);
+        
+        	if ($this->validator->isValid()) {
+            	die;
+            }
+            
+        	
+    	}
 		
 		$cart = $this->cart->all();
 		$goods = Goods::find(array_keys($cart));
@@ -25,34 +46,28 @@ class CheckoutController extends Controller
 			}, $goods->toArray());
 		}
 		$data['goods'] = $goods;
-		
+		$data['total_price'] = array_sum(array_map( function ($arr) {
+      		return $arr['price'] * $arr['quantity'];
+      	}, $data['goods']));
 		$data['header'] = $this->common->getHeader();
 		$data['footer'] = $this->common->getFooter();
       	
 		return $this->view->render($res, 'checkout.html', $data);
 	}
-
-	public function store($req, $res, $args)
+	
+	private function store($req, $res, $args)
 	{
 		
+		
 		$validator = $this->validator->validate($req, [
-    		'first_name' 		=> V::length(2, 25)->noWhitespace(),
-    		'last_name' 		=> V::length(2, 25)->noWhitespace(),
-    		'street_address'    => V::length(2, 25)->noWhitespace(),
-    		'house_address'    	=> V::length(2, 25)->noWhitespace(),
-    		'flat_address'    	=> V::length(2, 25)->noWhitespace(),
-    		'town'   			=> V::length(2, 25)->noWhitespace(),
-    		'zip'    			=> V::length(2, 25)->noWhitespace(),
-    		'email'    			=> V::length(2, 25)->noWhitespace(),
-    		'phone'    			=> V::length(2, 25)->noWhitespace(),
-			'order_notes'    	=> V::length(2, 25)->noWhitespace(),
+    		
 
 		]);
 
 		if ($validator->isValid()) {
-    		// Do something...
+    		
 		} else {
-    		$errors = $validator->getErrors();
+    		return $res->withRedirect($_SERVER['HTTP_REFERER'], 301);
 		}	
 	}
 }

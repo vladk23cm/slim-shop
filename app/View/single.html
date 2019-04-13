@@ -10,13 +10,13 @@
             <form action="/api/cart/add/{{ item.id }}" method="post">
               <h2 class="text-black">{{ item.title }}</h2>
               <p> {{ item.description }}</p>
-              <p><strong class="text-primary h4">{{ item.price }} гривны</strong></p>
+              <p><strong class="text-primary h4">₴{{ item.price }}</strong></p>
               <div class="mb-1 d-flex">
                 <label for="option-sm" class="d-flex mr-3 mb-3">
                   <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-sm" name="size" value="s"></span> <span class="d-inline-block text-black">Small</span>
                 </label>
                 <label for="option-md" class="d-flex mr-3 mb-3">
-                  <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-md"  name="size" value="m"></span> <span class="d-inline-block text-black">Medium</span>
+                  <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-md"  name="size" value="m" checked></span> <span class="d-inline-block text-black">Medium</span>
                 </label>
                 <label for="option-lg" class="d-flex mr-3 mb-3">
                   <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-lg"  name="size" value="l"></span> <span class="d-inline-block text-black">Large</span>
@@ -37,11 +37,14 @@
               </div>
 
               </div>
-              <p><button href="/api/cart/add/{{ item.id }}" class="buy-now btn btn-sm btn-primary">Add To Cart</button></p>
+              <p><button href="/api/cart/add/{{ item.id }}" class="buy-now btn btn-sm btn-primary">{{lang.add2cart}}</button></p>
             </form>
           </div>
         </div>
+        
       </div>
     </div>
-
+{% for item in content %}
+  {{ item | raw }}
+{% endfor %}
 {{ footer | raw }}

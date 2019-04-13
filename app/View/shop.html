@@ -22,8 +22,8 @@
                 </figure>
                 <div class="block-4-text p-4">
                   <h3><a href="{{path_for('product', {slug: item.slug})}}">{{ item.title }}</a></h3>
-                  <p class="mb-0">{{ item.description }}</p>
-                  <p class="text-primary font-weight-bold">${{ item.price }}</p>
+                  <p class="mb-0">{{ item.description |slice(0, 40) }}...</p>
+                  <p class="text-primary font-weight-bold">₴{{ item.price }}</p>
                 </div>
               </div>
             </div>

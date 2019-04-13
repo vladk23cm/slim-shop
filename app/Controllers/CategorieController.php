@@ -27,10 +27,9 @@ class CategorieController extends Controller
 			$this->user->changeLang($categorie->language_id, $user->language_id);
 		}
 		$goods = $categorie->goods;
-
 		$data['goods'] = $goods;
 
-		$data['header'] = $this->common->getHeader();
+		$data['header'] = $this->common->getHeader($categorie->name);
 		$data['footer'] = $this->common->getFooter();
 
 		return $this->view->render($res, 'shop.html', $data);
